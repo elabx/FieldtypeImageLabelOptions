@@ -50,7 +50,7 @@ class InputfieldRadiosImageLabel extends InputfieldRadios
 			}
 		}
 
-		$out = "<div class='InputfieldRadiosImageLabel' style='$cssVars'>";
+		$out = "<div class='InputfieldRadiosImageLabelWrapper' style='$cssVars'>";
 
 		// Parse the optionImages configuration
 		$imageMap = array();

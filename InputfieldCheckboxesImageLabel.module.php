@@ -50,7 +50,7 @@ class InputfieldCheckboxesImageLabel extends InputfieldCheckboxes
 			}
 		}
 
-		$out = "<div class='InputfieldCheckboxesImageLabel' style='$cssVars'>";
+		$out = "<div class='InputfieldCheckboxesImageLabelWrapper' style='$cssVars'>";
 
 		// Parse the optionImages configuration
 		$imageMap = array();

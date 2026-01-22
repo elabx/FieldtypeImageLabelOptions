@@ -1,18 +1,19 @@
-.InputfieldCheckboxesImageLabel {
+.InputfieldCheckboxesImageLabelWrapper {
+    display: flex;
+    gap:15px;
     --inputfield-image-label-options-desktop-width: 150px;
     --inputfield-image-label-options-mobile-width: 100px;
 }
 
-.InputfieldCheckboxesImageLabel .image-label-option {
+.InputfieldCheckboxesImageLabelWrapper .image-label-option {
     display: inline-block;
-    margin-right: 15px;
     margin-bottom: 10px;
     cursor: pointer;
     vertical-align: top;
 }
 
 /* Hide the checkbox but keep it accessible */
-.InputfieldCheckboxesImageLabel input[type="checkbox"] {
+.InputfieldCheckboxesImageLabelWrapper input[type="checkbox"] {
     position: absolute;
     opacity: 0;
     width: 0;
@@ -21,14 +22,14 @@
 }
 
 /* Style the content container (which wraps the image and text) */
-.InputfieldCheckboxesImageLabel .content {
+.InputfieldCheckboxesImageLabelWrapper .content {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 /* Image wrapper - contains the image and receives the border */
-.InputfieldCheckboxesImageLabel .image-wrapper {
+.InputfieldCheckboxesImageLabelWrapper .image-wrapper {
     display: block;
     width: var(--inputfield-image-label-options-mobile-width);
     border: 3px solid transparent;
@@ -36,12 +37,12 @@
 }
 
 /* Image wrapper with aspect ratio constraint */
-.InputfieldCheckboxesImageLabel .image-wrapper.has-aspect-ratio {
+.InputfieldCheckboxesImageLabelWrapper .image-wrapper.has-aspect-ratio {
     aspect-ratio: var(--inputfield-image-label-options-aspect-ratio);
 }
 
 /* Image styling - fills the wrapper */
-.InputfieldCheckboxesImageLabel .image-label-img {
+.InputfieldCheckboxesImageLabelWrapper .image-label-img {
     width: 100%;
     height: 100%;
     display: block;
@@ -50,13 +51,13 @@
 
 /* Desktop width - typically 768px and up */
 @media (min-width: 768px) {
-    .InputfieldCheckboxesImageLabel .image-wrapper {
+    .InputfieldCheckboxesImageLabelWrapper .image-wrapper {
         width: var(--inputfield-image-label-options-desktop-width);
     }
 }
 
 /* Label text below image */
-.InputfieldCheckboxesImageLabel .image-label-text {
+.InputfieldCheckboxesImageLabelWrapper .image-label-text {
     display: block;
     margin-top: 8px;
     text-align: center;
@@ -65,13 +66,13 @@
 }
 
 /* Checked state - highlight the image wrapper */
-.InputfieldCheckboxesImageLabel input[type="checkbox"]:checked + .content .image-wrapper {
+.InputfieldCheckboxesImageLabelWrapper input[type="checkbox"]:checked + .content .image-wrapper {
     border-color: #3eb998; /* ProcessWire primary color approx */
     outline: none;
 }
 
 /* Optional: Add some styles if it's just text, to make it look like a button */
-.InputfieldCheckboxesImageLabel .content:not(:has(img)) {
+.InputfieldCheckboxesImageLabelWrapper .content:not(:has(img)) {
     padding: 5px 10px;
     background: #f0f0f0;
     border-radius: 3px;
@@ -79,7 +80,7 @@
     transition: border-color 0.2s ease;
 }
 
-.InputfieldCheckboxesImageLabel input[type="checkbox"]:checked + .content:not(:has(img)) {
+.InputfieldCheckboxesImageLabelWrapper   input[type="checkbox"]:checked + .content:not(:has(img)) {
     background: #e0f0e9;
     border-color: #3eb998;
     color: #111;

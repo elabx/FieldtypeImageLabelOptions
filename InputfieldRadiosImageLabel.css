@@ -1,18 +1,19 @@
-.InputfieldRadiosImageLabel {
+.InputfieldRadiosImageLabelWrapper {
+    display: flex;
+    gap:15px;
     --inputfield-image-label-options-desktop-width: 150px;
     --inputfield-image-label-options-mobile-width: 100px;
 }
 
-.InputfieldRadiosImageLabel .image-label-option {
+.InputfieldRadiosImageLabelWrapper .image-label-option {
     display: inline-block;
-    margin-right: 15px;
     margin-bottom: 10px;
     cursor: pointer;
     vertical-align: top;
 }
 
 /* Hide the radio button but keep it accessible */
-.InputfieldRadiosImageLabel input[type="radio"] {
+.InputfieldRadiosImageLabelWrapper input[type="radio"] {
     position: absolute;
     opacity: 0;
     width: 0;
@@ -21,14 +22,14 @@
 }
 
 /* Style the content container (which wraps the image and text) */
-.InputfieldRadiosImageLabel .content {
+.InputfieldRadiosImageLabelWrapper .content {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 /* Image wrapper - contains the image and receives the border */
-.InputfieldRadiosImageLabel .image-wrapper {
+.InputfieldRadiosImageLabelWrapper .image-wrapper {
     display: block;
     width: var(--inputfield-image-label-options-mobile-width);
     border: 3px solid transparent;
@@ -36,12 +37,12 @@
 }
 
 /* Image wrapper with aspect ratio constraint */
-.InputfieldRadiosImageLabel .image-wrapper.has-aspect-ratio {
+.InputfieldRadiosImageLabelWrapper .image-wrapper.has-aspect-ratio {
     aspect-ratio: var(--inputfield-image-label-options-aspect-ratio);
 }
 
 /* Image styling - fills the wrapper */
-.InputfieldRadiosImageLabel .image-label-img {
+.InputfieldRadiosImageLabelWrapper .image-label-img {
     width: 100%;
     height: 100%;
     display: block;
@@ -50,13 +51,13 @@
 
 /* Desktop width - typically 768px and up */
 @media (min-width: 768px) {
-    .InputfieldRadiosImageLabel .image-wrapper {
+    .InputfieldRadiosImageLabelWrapper .image-wrapper {
         width: var(--inputfield-image-label-options-desktop-width);
     }
 }
 
 /* Label text below image */
-.InputfieldRadiosImageLabel .image-label-text {
+.InputfieldRadiosImageLabelWrapper .image-label-text {
     display: block;
     margin-top: 8px;
     text-align: center;
@@ -65,13 +66,13 @@
 }
 
 /* Checked state - highlight the image wrapper */
-.InputfieldRadiosImageLabel input[type="radio"]:checked + .content .image-wrapper {
+.InputfieldRadiosImageLabelWrapper input[type="radio"]:checked + .content .image-wrapper {
     border-color: #3eb998; /* ProcessWire primary color approx */
     outline: none;
 }
 
 /* Optional: Add some styles if it's just text, to make it look like a button */
-.InputfieldRadiosImageLabel .content:not(:has(img)) {
+.InputfieldRadiosImageLabelWrapper .content:not(:has(img)) {
     padding: 5px 10px;
     background: #f0f0f0;
     border-radius: 3px;
@@ -79,7 +80,7 @@
     transition: border-color 0.2s ease;
 }
 
-.InputfieldRadiosImageLabel input[type="radio"]:checked + .content:not(:has(img)) {
+.InputfieldRadiosImageLabelWrapper input[type="radio"]:checked + .content:not(:has(img)) {
     background: #e0f0e9;
     border-color: #3eb998;
     color: #111;
