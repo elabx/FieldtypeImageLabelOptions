@@ -34,7 +34,23 @@ class InputfieldCheckboxesImageLabel extends InputfieldCheckboxes
 
 	public function render()
 	{
-		$out = "<div class='InputfieldCheckboxesImageLabel'>";
+		// Get configuration values
+		$desktopWidth = isset($this->optionImageDesktopWidth) ? (int)$this->optionImageDesktopWidth : 150;
+		$mobileWidth = isset($this->optionImageMobileWidth) ? (int)$this->optionImageMobileWidth : 100;
+		$aspectRatio = isset($this->optionImageAspectRatio) && $this->optionImageAspectRatio ? trim($this->optionImageAspectRatio) : '';
+		$showLabel = isset($this->optionImageShowLabel) && $this->optionImageShowLabel;
+
+		// Build CSS custom properties for responsive widths (namespaced with --inputfield-image-label-options-)
+		$cssVars = "--inputfield-image-label-options-desktop-width: {$desktopWidth}px; --inputfield-image-label-options-mobile-width: {$mobileWidth}px;";
+		if ($aspectRatio) {
+			// Parse aspect ratio (e.g., "16:9" -> 16/9 = 1.777...)
+			if (preg_match('/^(\d+(?:\.\d+)?):(\d+(?:\.\d+)?)$/', $aspectRatio, $matches)) {
+				$ratio = (float)$matches[1] / (float)$matches[2];
+				$cssVars .= " --inputfield-image-label-options-aspect-ratio: {$ratio};";
+			}
+		}
+
+		$out = "<div class='InputfieldCheckboxesImageLabel' style='$cssVars'>";
 
 		// Parse the optionImages configuration
 		$imageMap = array();
@@ -58,14 +74,28 @@ class InputfieldCheckboxesImageLabel extends InputfieldCheckboxes
 			// But check if InputfieldCheckboxes logic requires strict name matching
 			$name = $this->name . "[]"; 
 
+			$textLabel = $this->wire('sanitizer')->entities($value);
+			$hasImage = isset($imageMap[$key]);
+
 			// If an image is defined for this option key, use it
-			if (isset($imageMap[$key])) {
+			if ($hasImage) {
 				$imgUrl = $this->wire('sanitizer')->url($imageMap[$key]);
-				$minWidth = isset($this->optionImageMinWidth) ? (int)$this->optionImageMinWidth : 100;
-				$label = "<img src='$imgUrl' alt='" . $this->wire('sanitizer')->entities($value) . "' style='min-width: {$minWidth}px;' />";
+				
+				// Determine wrapper class - apply aspect ratio to image wrapper
+				$wrapperClass = 'image-wrapper';
+				if ($aspectRatio) {
+					$wrapperClass .= ' has-aspect-ratio';
+				}
+				
+				$label = "<span class='$wrapperClass'><img src='$imgUrl' alt='$textLabel' class='image-label-img' /></span>";
+				
+				// Add label text below image if configured
+				if ($showLabel) {
+					$label .= "<span class='image-label-text'>$textLabel</span>";
+				}
 			} else {
 				// Fallback to text label (entity-encoded for safety)
-				$label = $this->wire('sanitizer')->entities($value);
+				$label = $textLabel;
 			}
 
 			$out .= "<label for='$id' class='image-label-option'>";

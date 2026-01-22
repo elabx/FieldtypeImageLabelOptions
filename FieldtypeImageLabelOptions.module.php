@@ -79,13 +79,37 @@ class FieldtypeImageLabelOptions extends FieldtypeOptions implements Module {
 			$inputfield->optionImages = $field->optionImages;
 		}
 
-		// Pass the optionImageMinWidth configuration to the Inputfield
+		// Pass the optionImageMinWidth configuration to the Inputfield (backwards compatibility)
 		if($field->optionImageMinWidth) {
 			$inputfield->optionImageMinWidth = $field->optionImageMinWidth;
 		} else {
 			// Default to 100px if not set
 			$inputfield->optionImageMinWidth = 100;
 		}
+
+		// Pass the desktop width configuration to the Inputfield
+		if($field->optionImageDesktopWidth) {
+			$inputfield->optionImageDesktopWidth = $field->optionImageDesktopWidth;
+		} else {
+			// Default to 150px if not set, or use optionImageMinWidth for backwards compatibility
+			$inputfield->optionImageDesktopWidth = $field->optionImageMinWidth ? $field->optionImageMinWidth : 150;
+		}
+
+		// Pass the mobile width configuration to the Inputfield
+		if($field->optionImageMobileWidth) {
+			$inputfield->optionImageMobileWidth = $field->optionImageMobileWidth;
+		} else {
+			// Default to 100px if not set
+			$inputfield->optionImageMobileWidth = 100;
+		}
+
+		// Pass the aspect ratio configuration to the Inputfield
+		if($field->optionImageAspectRatio) {
+			$inputfield->optionImageAspectRatio = $field->optionImageAspectRatio;
+		}
+
+		// Pass the show label configuration to the Inputfield
+		$inputfield->optionImageShowLabel = $field->optionImageShowLabel ? true : false;
 
 		return $inputfield;
 	}
@@ -117,15 +141,55 @@ class FieldtypeImageLabelOptions extends FieldtypeOptions implements Module {
 		
 		$inputfields->add($f);
 
-		// Add the Minimum Image Width field
+		// Add the Minimum Image Width field (deprecated, kept for backwards compatibility)
 		/** @var InputfieldInteger $f */
 		$f = $this->modules->get('InputfieldInteger');
 		$f->attr('name', 'optionImageMinWidth');
 		$f->label = $this->_('Minimum Image Width');
-		$f->description = $this->_('Minimum width in pixels for rendered images. Default is 100px.');
+		$f->description = $this->_('Minimum width in pixels for rendered images. Default is 100px. (Deprecated: Use Desktop Width instead)');
 		$f->value = $field->optionImageMinWidth ? $field->optionImageMinWidth : 100;
 		$f->attr('min', 1);
-		
+		$f->collapsed = Inputfield::collapsedYes;
+		$inputfields->add($f);
+
+		// Add Desktop Image Width field
+		/** @var InputfieldInteger $f */
+		$f = $this->modules->get('InputfieldInteger');
+		$f->attr('name', 'optionImageDesktopWidth');
+		$f->label = $this->_('Desktop Image Width');
+		$f->description = $this->_('Width in pixels for images on desktop screens. Default is 150px.');
+		$f->value = $field->optionImageDesktopWidth ? $field->optionImageDesktopWidth : 150;
+		$f->attr('min', 1);
+		$inputfields->add($f);
+
+		// Add Mobile Image Width field
+		/** @var InputfieldInteger $f */
+		$f = $this->modules->get('InputfieldInteger');
+		$f->attr('name', 'optionImageMobileWidth');
+		$f->label = $this->_('Mobile Image Width');
+		$f->description = $this->_('Width in pixels for images on mobile screens. Default is 100px.');
+		$f->value = $field->optionImageMobileWidth ? $field->optionImageMobileWidth : 100;
+		$f->attr('min', 1);
+		$inputfields->add($f);
+
+		// Add Aspect Ratio field
+		/** @var InputfieldText $f */
+		$f = $this->modules->get('InputfieldText');
+		$f->attr('name', 'optionImageAspectRatio');
+		$f->label = $this->_('Image Aspect Ratio');
+		$f->description = $this->_('Aspect ratio for images in format "width:height" (e.g., "16:9", "1:1", "4:3"). Leave empty for no aspect ratio constraint.');
+		$f->value = $field->optionImageAspectRatio ? $field->optionImageAspectRatio : '';
+		$f->notes = $this->_('Examples: 16:9, 1:1, 4:3, 3:2');
+		$inputfields->add($f);
+
+		// Add Show Label Below Image checkbox
+		/** @var InputfieldCheckbox $f */
+		$f = $this->modules->get('InputfieldCheckbox');
+		$f->attr('name', 'optionImageShowLabel');
+		$f->label = $this->_('Show Label Below Image');
+		$f->description = $this->_('If checked, the option label text will be displayed below the image.');
+		$f->attr('value', 1);
+		$f->checked = $field->optionImageShowLabel ? 'checked' : '';
 		$inputfields->add($f);
 
 		return $inputfields;
