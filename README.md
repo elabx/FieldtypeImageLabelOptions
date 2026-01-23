@@ -1,4 +1,4 @@
-# InputfieldRadiosImageLabel
+# InputfieldRadiosImageLabel (Alpha)
 
 A ProcessWire Inputfield module that extends `InputfieldRadios` to render radio buttons as selectable images or styled labels.
 
