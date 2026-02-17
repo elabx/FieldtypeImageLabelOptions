@@ -1,5 +1,5 @@
 {
-  "name": "elabx/fieldtype-image-label-options",
+  "name": "elabx/inputfield-image-label-options",
   "description": "ProcessWire Inputfields for selecting options with images (Radios and Checkboxes)",
   "type": "pw-module",
   "keywords": ["processwire", "inputfield", "options", "images", "radios", "checkboxes"],
